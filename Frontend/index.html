@@ -1,0 +1,63 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser Automation System</title>
+</head>
+<body>
+        <button onclick="closeBrowser()">closeBrowser</button>
+        <button onclick="clearCacheAndHistory()">clear</button>
+</body>
+    <script>
+        function closeBrowser(){
+                console.log("here");
+                var myRequest = "";
+                fetch('http://localhost:3000/close/google chrome', 
+                        {
+                            method: 'POST',
+                                 mode: 'cors',
+                                 body:JSON.stringify({
+                                    name:'tanya'
+                                 }),
+                    })
+                    .then((response) => {
+                    // …
+                        if(response.status == 200){
+                            console.log("browser closed")
+                            // window.close();
+                        }else{
+                            console.log("status code ",response.status);
+                        }
+                }).catch((err)=>{
+                        console.log("error closing browser ",err);
+                })
+        }
+
+        function clearCacheAndHistory(){
+                fetch('http://localhost:3000/clear', 
+                        {
+                                method: 'GET',
+                                 mode: 'cors',
+                                 params:{
+                                    browser:'safari'
+                                 }
+                    })
+                    .then((response) => {
+                    // …
+                        console.log(response)
+                        console.log(response.data,response.body,response.message)
+                        if(response.status == 200){
+                            
+                            console.log("cleared history and cache")
+                            // window.close();
+                        }else{
+                            console.log("status code",response.status);
+                        }
+                }).catch((err)=>{
+                        console.log("error clearing history and cache",err);
+                })
+        }
+
+    </script>
+</html>
